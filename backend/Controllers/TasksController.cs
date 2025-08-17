@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 using backend.DTOs;
 using backend.Services;
+using backend.Hubs;
 
 namespace backend.Controllers;
 
@@ -12,10 +14,12 @@ namespace backend.Controllers;
 public class TasksController : ControllerBase
 {
     private readonly ITaskService _taskService;
+    private readonly IHubContext<TasksHub> _hubContext;
 
-    public TasksController(ITaskService taskService)
+    public TasksController(ITaskService taskService, IHubContext<TasksHub> hubContext)
     {
         _taskService = taskService;
+        _hubContext = hubContext;
     }
 
     [HttpGet]
@@ -47,6 +51,9 @@ public class TasksController : ControllerBase
         var creatorId = GetCurrentUserId();
         var task = await _taskService.CreateTaskAsync(creatorId, dto);
         
+        // Broadcast task update to all connected clients
+        await _hubContext.Clients.All.SendAsync("taskUpdated", task.Id);
+        
         return CreatedAtAction(nameof(GetTask), new { id = task.Id }, task);
     }
 
@@ -68,6 +75,9 @@ public class TasksController : ControllerBase
             {
                 return NotFound();
             }
+            
+            // Broadcast task update to all connected clients
+            await _hubContext.Clients.All.SendAsync("taskUpdated", id);
             
             return Ok(task);
         }
@@ -102,6 +112,9 @@ public class TasksController : ControllerBase
             {
                 return NotFound();
             }
+            
+            // Broadcast task update to all connected clients
+            await _hubContext.Clients.All.SendAsync("taskUpdated", id);
             
             return NoContent();
         }

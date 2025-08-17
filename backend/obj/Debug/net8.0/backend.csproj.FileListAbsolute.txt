@@ -167,3 +167,8 @@
 /Users/timothy/taskmgt/backend/obj/Debug/net8.0/backend.pdb
 /Users/timothy/taskmgt/backend/obj/Debug/net8.0/backend.genruntimeconfig.cache
 /Users/timothy/taskmgt/backend/obj/Debug/net8.0/ref/backend.dll
+/Users/timothy/taskmgt/backend/bin/Debug/net8.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
+/Users/timothy/taskmgt/backend/bin/Debug/net8.0/Microsoft.Extensions.Hosting.Abstractions.dll
+/Users/timothy/taskmgt/backend/bin/Debug/net8.0/Microsoft.Extensions.ObjectPool.dll
+/Users/timothy/taskmgt/backend/bin/Debug/net8.0/Newtonsoft.Json.dll
+/Users/timothy/taskmgt/backend/bin/Debug/net8.0/System.Net.WebSockets.WebSocketProtocol.dll

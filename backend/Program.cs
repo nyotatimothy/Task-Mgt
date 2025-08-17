@@ -7,6 +7,7 @@ using System.Text;
 using backend.Data;
 using backend.Models;
 using backend.Services;
+using backend.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
+
+// Add SignalR
+builder.Services.AddSignalR();
 
 // Add JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -80,7 +84,8 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins("http://localhost:5173")
               .AllowAnyMethod()
-              .AllowAnyHeader();
+              .AllowAnyHeader()
+              .AllowCredentials();
     });
 });
 
@@ -98,6 +103,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Map SignalR hub
+app.MapHub<TasksHub>("/hubs/tasks");
 
 // Seed development data
 if (app.Environment.IsDevelopment())
