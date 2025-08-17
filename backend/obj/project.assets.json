@@ -5205,11 +5205,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/timothy/.Trash/Task-Mgt/backend/backend.csproj",
+      "projectUniqueName": "/Users/timothy/taskmgt/backend/backend.csproj",
       "projectName": "backend",
-      "projectPath": "/Users/timothy/.Trash/Task-Mgt/backend/backend.csproj",
+      "projectPath": "/Users/timothy/taskmgt/backend/backend.csproj",
       "packagesPath": "/Users/timothy/.nuget/packages/",
-      "outputPath": "/Users/timothy/.Trash/Task-Mgt/backend/obj/",
+      "outputPath": "/Users/timothy/taskmgt/backend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/timothy/.nuget/NuGet/NuGet.Config"
