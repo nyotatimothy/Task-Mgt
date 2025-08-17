@@ -6,14 +6,24 @@ A modern task management application built with .NET 8 Web API backend and React
 
 ## 🚀 Quick Start
 
-### Backend API
+### Option 1: Dev Scripts (Recommended)
+```bash
+# Linux/Mac
+./run-dev.sh
+
+# Windows
+./run-dev.ps1
+```
+
+### Option 2: Manual Start
+#### Backend API
 ```bash
 cd backend
 dotnet run
 ```
 **API**: http://localhost:5175/swagger
 
-### Frontend
+#### Frontend
 ```bash
 cd frontend
 npm install
@@ -67,6 +77,7 @@ npm run dev
 - ✅ Real-time connection status indicator
 - ✅ Task deletion with confirmation
 - ✅ Priority visualization and assignee display
+- ✅ SignalR realtime updates (auto-refetch on task changes)
 
 ## 🔄 Status Transition Rules
 
@@ -81,6 +92,15 @@ Tasks follow a strict workflow:
 1. **Drag & Drop**: Implement drag-and-drop between columns with @dnd-kit/core
 2. **Pagination**: Add server-side pagination + query params for search
 3. **Activity Log**: Track task changes and user activities
+
+## 🔄 Realtime Updates
+
+The application uses **SignalR** for real-time task synchronization:
+- ✅ Server broadcasts task changes to all connected clients
+- ✅ Frontend automatically refetches tasks when changes occur
+- ✅ Connection status indicator (🟢 Live / 🔴 Offline)
+- ✅ Graceful fallback to manual refetch if SignalR connection fails
+- ✅ Automatic reconnection with visual feedback
 
 ## 🚦 Routes
 
