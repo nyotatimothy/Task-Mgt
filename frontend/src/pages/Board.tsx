@@ -5,7 +5,7 @@ import { User } from '../types/user';
 import { TaskCard } from '../components/TaskCard';
 import { TaskModal } from '../components/TaskModal';
 import { apiGet, apiPost, apiPut, apiDelete } from '../api/client';
-import { useSignalR } from '../hooks/useSignalR';
+import { useTasksHub } from '../hooks/useTasksHub';
 
 export function Board() {
   const { username, role, logout } = useAuth();
@@ -24,8 +24,8 @@ export function Board() {
   const [editingTask, setEditingTask] = useState<TaskItem | undefined>();
 
   // SignalR for realtime updates
-  const { isConnected } = useSignalR({
-    onTaskUpdated: () => {
+  const { connected } = useTasksHub({
+    onUpdated: () => {
       console.log('Realtime task update - refetching tasks');
       loadTasks();
     }
@@ -153,9 +153,9 @@ export function Board() {
           <span style={{ 
             marginRight: '15px', 
             fontSize: '12px',
-            color: isConnected ? '#28a745' : '#6c757d'
+            color: connected ? '#28a745' : '#6c757d'
           }}>
-            {isConnected ? '🟢 Live' : '🔴 Offline'}
+            {connected ? '🟢 Live' : '🔴 Offline'}
           </span>
           <button 
             onClick={logout}
