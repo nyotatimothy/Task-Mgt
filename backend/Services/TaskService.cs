@@ -156,7 +156,7 @@ public class TaskService : ITaskService
         return true;
     }
 
-    private static bool IsValidStatusTransition(backend.Models.TaskStatus from, backend.Models.TaskStatus to)
+    public static bool IsValidStatusTransition(backend.Models.TaskStatus from, backend.Models.TaskStatus to)
     {
         // Allow same to same
         if (from == to) return true;
