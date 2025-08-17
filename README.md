@@ -13,7 +13,7 @@ dotnet run
 ```
 **API**: http://localhost:5175/swagger
 
-### Frontend (TODO)
+### Frontend
 ```bash
 cd frontend
 npm install
@@ -46,6 +46,7 @@ npm run dev
 
 ## ✅ What Works Now
 
+**Backend:**
 - ✅ JWT Authentication (register/login)
 - ✅ User management with roles (USER/ADMIN)
 - ✅ Task CRUD operations
@@ -55,6 +56,17 @@ npm run dev
 - ✅ Swagger API documentation
 - ✅ Database seeding with sample data
 - ✅ CORS enabled for frontend
+
+**Frontend:**
+- ✅ React 18 + TypeScript + Vite
+- ✅ Authentication flow (login/register/logout)
+- ✅ Protected routes with JWT
+- ✅ 3-column kanban board (Todo/InProgress/Done)
+- ✅ Task create/edit modal with full form
+- ✅ Task filtering by status, assignee, and text search
+- ✅ Real-time connection status indicator
+- ✅ Task deletion with confirmation
+- ✅ Priority visualization and assignee display
 
 ## 🔄 Status Transition Rules
 
@@ -66,6 +78,13 @@ Tasks follow a strict workflow:
 
 ## 📝 TODOs
 
-1. **Frontend**: 3-column kanban board (Todo/InProgress/Done) with drag-and-drop
-2. **Pagination**: Add pagination to task listings
+1. **Drag & Drop**: Implement drag-and-drop between columns with @dnd-kit/core
+2. **Pagination**: Add server-side pagination + query params for search
 3. **Activity Log**: Track task changes and user activities
+
+## 🚦 Routes
+
+- `/login` - User login page
+- `/register` - User registration page  
+- `/app` - Protected task board (requires authentication)
+- `/` - Redirects to `/app`
