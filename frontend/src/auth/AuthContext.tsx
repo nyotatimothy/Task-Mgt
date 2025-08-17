@@ -1,14 +1,24 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { AuthResponse, LoginRequest, RegisterRequest } from '../types/user';
-import { apiPost } from '../api/client';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { AuthResponse, LoginRequest, RegisterRequest } from "../types/user";
+import { apiPost } from "../api/client";
 
 interface AuthContextType {
   token: string | null;
   username: string | null;
   role: string | null;
   isAuthenticated: boolean;
-  login: (request: LoginRequest) => Promise<{ success: boolean; error?: string }>;
-  register: (request: RegisterRequest) => Promise<{ success: boolean; error?: string }>;
+  login: (
+    request: LoginRequest,
+  ) => Promise<{ success: boolean; error?: string }>;
+  register: (
+    request: RegisterRequest,
+  ) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
 }
 
@@ -25,7 +35,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     // Load auth from localStorage on startup
-    const stored = localStorage.getItem('auth');
+    const stored = localStorage.getItem("auth");
     if (stored) {
       try {
         const auth = JSON.parse(stored);
@@ -33,37 +43,37 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUsername(auth.username);
         setRole(auth.role);
       } catch (error) {
-        console.error('Failed to parse stored auth:', error);
-        localStorage.removeItem('auth');
+        console.error("Failed to parse stored auth:", error);
+        localStorage.removeItem("auth");
       }
     }
   }, []);
 
   const login = async (request: LoginRequest) => {
-    const result = await apiPost<AuthResponse>('/auth/login', request);
+    const result = await apiPost<AuthResponse>("/auth/login", request);
     if (result.data) {
       const auth = result.data;
       setToken(auth.token);
       setUsername(auth.username);
       setRole(auth.role);
-      localStorage.setItem('auth', JSON.stringify(auth));
+      localStorage.setItem("auth", JSON.stringify(auth));
       return { success: true };
     } else {
-      return { success: false, error: result.error || 'Login failed' };
+      return { success: false, error: result.error || "Login failed" };
     }
   };
 
   const register = async (request: RegisterRequest) => {
-    const result = await apiPost<AuthResponse>('/auth/register', request);
+    const result = await apiPost<AuthResponse>("/auth/register", request);
     if (result.data) {
       const auth = result.data;
       setToken(auth.token);
       setUsername(auth.username);
       setRole(auth.role);
-      localStorage.setItem('auth', JSON.stringify(auth));
+      localStorage.setItem("auth", JSON.stringify(auth));
       return { success: true };
     } else {
-      return { success: false, error: result.error || 'Registration failed' };
+      return { success: false, error: result.error || "Registration failed" };
     }
   };
 
@@ -71,7 +81,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setToken(null);
     setUsername(null);
     setRole(null);
-    localStorage.removeItem('auth');
+    localStorage.removeItem("auth");
   };
 
   const value: AuthContextType = {
@@ -90,7 +100,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }

@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import React, { ReactNode } from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 interface RequireAuthProps {
   children: ReactNode;

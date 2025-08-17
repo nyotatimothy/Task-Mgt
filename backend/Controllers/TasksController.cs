@@ -50,10 +50,10 @@ public class TasksController : ControllerBase
 
         var creatorId = GetCurrentUserId();
         var task = await _taskService.CreateTaskAsync(creatorId, dto);
-        
+
         // Broadcast task update to all connected clients
         await _hubContext.Clients.All.SendAsync("taskUpdated", task.Id);
-        
+
         return CreatedAtAction(nameof(GetTask), new { id = task.Id }, task);
     }
 
@@ -70,15 +70,15 @@ public class TasksController : ControllerBase
             var callerId = GetCurrentUserId();
             var callerRole = GetCurrentUserRole();
             var task = await _taskService.UpdateTaskAsync(id, callerId, callerRole, dto);
-            
+
             if (task == null)
             {
                 return NotFound();
             }
-            
+
             // Broadcast task update to all connected clients
             await _hubContext.Clients.All.SendAsync("taskUpdated", id);
-            
+
             return Ok(task);
         }
         catch (UnauthorizedAccessException ex)
@@ -107,15 +107,15 @@ public class TasksController : ControllerBase
             var callerId = GetCurrentUserId();
             var callerRole = GetCurrentUserRole();
             var deleted = await _taskService.DeleteTaskAsync(id, callerId, callerRole);
-            
+
             if (!deleted)
             {
                 return NotFound();
             }
-            
+
             // Broadcast task update to all connected clients
             await _hubContext.Clients.All.SendAsync("taskUpdated", id);
-            
+
             return NoContent();
         }
         catch (UnauthorizedAccessException ex)

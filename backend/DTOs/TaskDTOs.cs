@@ -4,7 +4,7 @@ using backend.Models;
 namespace backend.DTOs;
 
 public record TaskCreateDto(
-    [Required] [MaxLength(200)] string Title,
+    [Required][MaxLength(200)] string Title,
     [MaxLength(1000)] string? Description,
     [Range(1, 5)] int Priority = 3,
     int? AssigneeId = null

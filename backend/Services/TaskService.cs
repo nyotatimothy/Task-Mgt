@@ -76,7 +76,7 @@ public class TaskService : ITaskService
         await _context.Entry(task)
             .Reference(t => t.Creator)
             .LoadAsync();
-        
+
         if (task.AssigneeId.HasValue)
         {
             await _context.Entry(task)
@@ -104,13 +104,13 @@ public class TaskService : ITaskService
         // Update basic fields
         if (dto.Title != null)
             task.Title = dto.Title;
-        
+
         if (dto.Description != null)
             task.Description = dto.Description;
-        
+
         if (dto.Priority.HasValue)
             task.Priority = dto.Priority.Value;
-        
+
         if (dto.AssigneeId.HasValue)
             task.AssigneeId = dto.AssigneeId.Value;
 
@@ -143,7 +143,7 @@ public class TaskService : ITaskService
     public async Task<bool> DeleteTaskAsync(int id, int callerId, string callerRole)
     {
         var task = await _context.Tasks.FirstOrDefaultAsync(t => t.Id == id);
-        
+
         if (task == null)
             return false;
 
