@@ -5,6 +5,7 @@ import { User } from '../types/user';
 import { TaskCard } from '../components/TaskCard';
 import { TaskModal } from '../components/TaskModal';
 import { apiGet, apiPost, apiPut, apiDelete } from '../api/client';
+import { useSignalR } from '../hooks/useSignalR';
 
 export function Board() {
   const { username, role, logout } = useAuth();
@@ -21,6 +22,14 @@ export function Board() {
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<TaskItem | undefined>();
+
+  // SignalR for realtime updates
+  const { isConnected } = useSignalR({
+    onTaskUpdated: () => {
+      console.log('Realtime task update - refetching tasks');
+      loadTasks();
+    }
+  });
 
   useEffect(() => {
     loadInitialData();
@@ -140,6 +149,13 @@ export function Board() {
         <div>
           <span style={{ marginRight: '15px' }}>
             Welcome, {username} ({role})
+          </span>
+          <span style={{ 
+            marginRight: '15px', 
+            fontSize: '12px',
+            color: isConnected ? '#28a745' : '#6c757d'
+          }}>
+            {isConnected ? '🟢 Live' : '🔴 Offline'}
           </span>
           <button 
             onClick={logout}
